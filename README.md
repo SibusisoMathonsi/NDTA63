@@ -387,6 +387,7 @@ After running the pipeline, confirm these artifacts exist:
 
 For questions about this analysis:
 - **Project Lead:** Sibusiso Agent Mathonsi
+- **LinkedIn:** [linkedin.com/in/agent-sibusiso-mathonsi-75923a3a0](https://www.linkedin.com/in/agent-sibusiso-mathonsi-75923a3a0)
 - **Data Requests:** See [DATA_SOURCES_AND_PROVENANCE.md](DATA_SOURCES_AND_PROVENANCE.md)
 - **Technical Issues:** Check `*/PROCESS.txt` files in each folder
 
