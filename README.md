@@ -154,14 +154,14 @@ Data Preparation (Cleaning & Validation)
 
 ## 👥 Team & Contributions
 
-| Name | Student ID | Primary Role | Contributions |
-|------|-----------|--------------|----------------|
-| **Sibusiso Agent Mathonsi** | 202331971 | Project Coordinator, Data Integration Lead | Database schema, overall pipeline architecture, project coordination |
-| **Kegoikantse Sebetseba** | 202414220 | Data Preparation & Python Analysis | Data cleaning, transformation logic, Python pipeline development |
-| **Agcobile Qabo** | 202469432 | Data Preparation & Analysis | Data validation, quality assurance, statistical summaries |
-| **Lebogang Malatjie** | 202404978 | Numerical Analysis & Visualization | NumPy calculations, chart design, visual storytelling |
-| **Tlotlo Naledi** | 202422544 | Database Integration & Reporting | SQLite implementation, query optimization, documentation |
-| **Tlotlanang Naledi** | 202422539 | Reporting & Stakeholder Communication | Final report writing, demo development, stakeholder materials |
+| Name | Primary Role | Contributions |
+|------|--------------|----------------|
+| **Sibusiso Agent Mathonsi** | Project Coordinator, Data Integration Lead | Database schema, overall pipeline architecture, project coordination |
+| **Kegoikantse Sebetseba** | Data Preparation & Python Analysis | Data cleaning, transformation logic, Python pipeline development |
+| **Agcobile Qabo** | Data Preparation & Analysis | Data validation, quality assurance, statistical summaries |
+| **Lebogang Malatjie** | Numerical Analysis & Visualization | NumPy calculations, chart design, visual storytelling |
+| **Tlotlo Naledi** | Database Integration & Reporting | SQLite implementation, query optimization, documentation |
+| **Tlotlanang Naledi** | Reporting & Stakeholder Communication | Final report writing, demo development, stakeholder materials |
 
 ---
 
@@ -386,7 +386,7 @@ After running the pipeline, confirm these artifacts exist:
 ## 📞 Contact & Support
 
 For questions about this analysis:
-- **Project Lead:** Sibusiso Agent Mathonsi (202331971)
+- **Project Lead:** Sibusiso Agent Mathonsi
 - **Data Requests:** See [DATA_SOURCES_AND_PROVENANCE.md](DATA_SOURCES_AND_PROVENANCE.md)
 - **Technical Issues:** Check `*/PROCESS.txt` files in each folder
 
