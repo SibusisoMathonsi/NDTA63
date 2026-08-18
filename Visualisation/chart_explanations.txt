@@ -1,0 +1,16 @@
+CHART EXPLANATIONS
+
+severe_food_insecurity_trend.png:
+- Shows the annual percentage of South Africa's population experiencing severe food insecurity in the available WDI data.
+- The line rises from 2018 to 2023, indicating a worsening prevalence over the period.
+
+ipc_phase_distribution_people.png:
+- Shows the number of people in each IPC phase in the 2020-10 South Africa snapshot.
+- Phase 5 is labelled Not reported because the supplied source value is missing.
+
+ipc_phase_distribution_percentage.png:
+- Shows the same IPC phase distribution as percentages of the classified population.
+- The chart keeps Phase 5 as Not reported and uses the source-reported Phase 3+ result for the crisis-or-worse KPI.
+
+food_security_overview_dashboard.png:
+- Combines the trend view and IPC snapshot for use in the report or presentation.
