@@ -495,12 +495,3 @@ The pipeline creates `Database Integration/food_security.db` with these analytic
 | Report generation | Python standard library, Matplotlib PDF backend, and generated DOCX/PDF artifacts |
 
 Exact third-party package versions used in the current project environment are pinned in `requirements.txt`.
-
-## Submission readiness
-
-- [x] Raw source extracts preserved.
-- [x] Reproducible Python pipeline and Excel workbook available.
-- [x] Cleaned data, numerical tables, visual exports, SQLite database, and query results present.
-- [x] Report and demo artifacts present.
-- [ ] Add team names and student numbers to the final report files.
-- [ ] Add the source portal URLs, retrieval dates, and any required citation/licence text before external publication.
