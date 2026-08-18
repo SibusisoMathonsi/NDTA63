@@ -90,7 +90,7 @@ The WDI indicator is published by the World Bank with the Food and Agriculture O
 - The IPC Phase 5 people and percentage observations are missing in the supplied snapshot. A missing observation is an information gap, not evidence of zero people.
 - The phase distribution is one October 2020 snapshot; the WDI series is annual and runs through 2023. The two measures cannot be combined into a single trend or used to infer causation.
 
-**Visual on this page.** A one-panel data lineage: `Raw source files → validated South Africa records → SQLite tables → Excel dashboard/report`. Add row counts and a small data-quality callout: “Phase 5: not reported in supplied IPC snapshot.”
+**Visual on this page.** A one-panel data lineage: `Raw source files → validated South Africa records → MySQL tables → Excel dashboard/report`. Add row counts and a small data-quality callout: "Phase 5: not reported in supplied IPC snapshot."
 
 ---
 
@@ -167,7 +167,7 @@ The final evidence pack should contain:
 
 ### Suggested database narrative
 
-“The analysis uses a reproducible SQLite reporting layer. Cleaned annual WDI observations and IPC phase observations are loaded with their source identifiers, units, observation status, and time period retained. Report-ready summary queries produce the annual trend and the October 2020 Phase 3+ snapshot. The database is an analytical evidence store, not a live operational system.”
+"The analysis uses a reproducible MySQL reporting layer. Cleaned annual WDI observations and IPC phase observations are loaded with their source identifiers, units, observation status, and time period retained. Report-ready summary queries produce the annual trend and the October 2020 Phase 3+ snapshot. The database is an analytical evidence store, not a live operational system."
 
 **Visual on this page.** A compact ERD or data-lineage diagram plus a small table showing: question, query output, and dashboard use. Do not insert raw SQL screenshots as the main visual; place detailed SQL in an appendix/evidence pack.
 

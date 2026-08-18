@@ -2,7 +2,8 @@ from pathlib import Path
 from html import escape
 from textwrap import wrap
 from zipfile import ZIP_DEFLATED, ZipFile
-import sqlite3
+import mysql.connector
+from mysql.connector import Error
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -588,19 +589,45 @@ def write_excel_workbook(
 def write_database_outputs(
     ipc_zaf: pd.DataFrame, ipc_phases: pd.DataFrame, svfi_zaf: pd.DataFrame, phase_summary: pd.DataFrame
 ) -> None:
-    database_path = DATABASE_DIR / "food_security.db"
-    if database_path.exists():
-        database_path.unlink()
+    # MySQL connection configuration
+    mysql_config = {
+        "host": "localhost",
+        "user": "root",
+        "password": "",  # Update with actual password if needed
+        "database": "food_security_db",
+        "raise_on_warnings": True
+    }
+    
+    try:
+        # Establish MySQL connection
+        connection = mysql.connector.connect(**mysql_config)
+        cursor = connection.cursor()
+        
+        # Create database if it doesn't exist
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {mysql_config['database']}")
+        cursor.execute(f"USE {mysql_config['database']}")
+        
+        # Drop existing tables if they exist
+        cursor.execute("DROP TABLE IF EXISTS ipc_phase_summary")
+        cursor.execute("DROP TABLE IF EXISTS ipc_phase_distribution")
+        cursor.execute("DROP TABLE IF EXISTS severe_food_insecurity")
+        cursor.execute("DROP TABLE IF EXISTS ipc_cleaned")
+        connection.commit()
+        
+        # Write dataframes to MySQL tables using to_sql
+        from sqlalchemy import create_engine
+        engine = create_engine(f"mysql+mysqlconnector://{mysql_config['user']}:{mysql_config['password']}@{mysql_config['host']}/{mysql_config['database']}")
+        
+        ipc_zaf.to_sql("ipc_cleaned", engine, index=False, if_exists="replace")
+        ipc_phases.to_sql("ipc_phase_distribution", engine, index=False, if_exists="replace")
+        svfi_zaf.to_sql("severe_food_insecurity", engine, index=False, if_exists="replace")
+        phase_summary.to_sql("ipc_phase_summary", engine, index=False, if_exists="replace")
 
-    with sqlite3.connect(database_path) as connection:
-        ipc_zaf.to_sql("ipc_cleaned", connection, index=False, if_exists="replace")
-        ipc_phases.to_sql("ipc_phase_distribution", connection, index=False, if_exists="replace")
-        svfi_zaf.to_sql("severe_food_insecurity", connection, index=False, if_exists="replace")
-        phase_summary.to_sql("ipc_phase_summary", connection, index=False, if_exists="replace")
+        # Create indexes
+        cursor.execute("CREATE INDEX idx_svfi_year ON severe_food_insecurity(year)")
+        cursor.execute("CREATE INDEX idx_ipc_phase_metric ON ipc_phase_distribution(phase, metric)")
 
-        connection.execute("CREATE INDEX idx_svfi_year ON severe_food_insecurity(year)")
-        connection.execute("CREATE INDEX idx_ipc_phase_metric ON ipc_phase_distribution(phase, metric)")
-
+        # Execute analytical queries
         p3plus_result = pd.read_sql_query(
             """
             SELECT
@@ -609,7 +636,7 @@ def write_database_outputs(
             FROM ipc_cleaned
             WHERE indicator = 'IPC_IPC_P3PLUS';
             """,
-            connection,
+            engine,
         )
         svfi_result = pd.read_sql_query(
             """
@@ -619,7 +646,7 @@ def write_database_outputs(
             FROM severe_food_insecurity
             ORDER BY year;
             """,
-            connection,
+            engine,
         )
         phase_result = pd.read_sql_query(
             """
@@ -627,22 +654,39 @@ def write_database_outputs(
             FROM ipc_phase_summary
             ORDER BY phase_order;
             """,
-            connection,
+            engine,
         )
-        update_demo = pd.DataFrame(
-            [
-                {
-                    "operation": "UPDATE demonstration",
-                    "sql_pattern": "UPDATE severe_food_insecurity SET obs_status_label = 'Reviewed for project' WHERE year = 2023;",
-                    "safety_note": "Uses a WHERE clause and should be run only in a copied/demo table for assessment evidence.",
-                },
-                {
-                    "operation": "DELETE demonstration",
-                    "sql_pattern": "DELETE FROM severe_food_insecurity WHERE year IS NULL;",
-                    "safety_note": "Uses a WHERE clause that targets invalid rows only; no valid rows in this project match it.",
-                },
-            ]
-        )
+        
+        connection.commit()
+        cursor.close()
+        connection.close()
+        
+    except Error as err:
+        if err.errno == 2003:
+            print("ERROR: Unable to connect to MySQL server. Please ensure:")
+            print("  1. MySQL server is running")
+            print("  2. Connection details are correct (host, user, password)")
+            print("  3. Database credentials are configured in write_database_outputs()")
+        elif err.errno == 1045:
+            print("ERROR: Access denied. Check MySQL username and password.")
+        else:
+            print(f"ERROR: {err}")
+        raise
+        
+    update_demo = pd.DataFrame(
+        [
+            {
+                "operation": "UPDATE demonstration",
+                "sql_pattern": "UPDATE severe_food_insecurity SET obs_status_label = 'Reviewed for project' WHERE year = 2023;",
+                "safety_note": "Uses a WHERE clause and should be run only in a copied/demo table for assessment evidence.",
+            },
+            {
+                "operation": "DELETE demonstration",
+                "sql_pattern": "DELETE FROM severe_food_insecurity WHERE year IS NULL;",
+                "safety_note": "Uses a WHERE clause that targets invalid rows only; no valid rows in this project match it.",
+            },
+        ]
+    )
 
     p3plus_result.to_csv(DATABASE_DIR / "query_result_crisis_or_worse.csv", index=False)
     svfi_result.to_csv(DATABASE_DIR / "query_result_svfi_trend.csv", index=False)
@@ -778,7 +822,7 @@ WHERE year IS NULL;
     notes = [
         "DATABASE INTEGRATION EVIDENCE",
         "",
-        "- food_security.db is a SQLite database generated from the cleaned project outputs.",
+        "- food_security_db is a MySQL database generated from the cleaned project outputs.",
         "- schema.sql documents the analytical tables.",
         "- queries.sql contains SELECT queries plus safe UPDATE and DELETE examples using WHERE clauses.",
         "- query_result_*.csv files are exported query outputs for report evidence.",
@@ -837,7 +881,7 @@ def report_sections(
         (
             "Database Integration",
             [
-                "A SQLite database named food_security.db was generated from the cleaned datasets. It includes tables for cleaned IPC records, IPC phase distribution, severe food insecurity trend data, and summarised IPC phase results.",
+                "A MySQL database named food_security_db was generated from the cleaned datasets. It includes tables for cleaned IPC records, IPC phase distribution, severe food insecurity trend data, and summarised IPC phase results.",
                 "The database folder includes schema.sql, queries.sql, exported SELECT query results, and safe UPDATE/DELETE examples. The update and delete examples use WHERE clauses and are intended for a copied demo table.",
                 "This demonstrates that the cleaned data can be stored, queried, modified safely, and exported for reporting or visualisation.",
             ],
@@ -891,7 +935,7 @@ def write_report_markdown(sections: list[tuple[str, list[str]]]) -> None:
             "- Data Preparation: cleaned CSV files, descriptive statistics, and data quality notes.",
             "- Numeric Analysis: NumPy-driven summary tables and numerical findings.",
             "- Python or Excel Data Analysis: reusable Python pipeline and Excel workbook.",
-            "- Database Integration: SQLite database, schema, queries, and exported query results.",
+            "- Database Integration: MySQL database, schema, queries, and exported query results.",
             "- Visualisation: final PNG charts and chart explanations.",
         ]
     )
@@ -1082,7 +1126,7 @@ def write_demo_materials(sections: list[tuple[str, list[str]]]) -> None:
         "3. Run: python \"Python or Excel Data Analysis\\food_security_pipeline.py\"",
         "4. Open Data Preparation outputs and explain South Africa filtering, missing values, and cleaned files.",
         "5. Open Numeric Analysis outputs and explain the severe food insecurity trend and IPC Phase 3+ result.",
-        "6. Open Database Integration/food_security.db or the exported query CSV files, then explain schema.sql and queries.sql.",
+        "6. Open Database Integration folder or the exported query CSV files, then explain schema.sql and queries.sql.",
         "7. Open the Visualisation folder and discuss the trend chart, IPC phase charts, and dashboard.",
         "8. Open Report & Demo/NDTA631_Group_Report.pdf and use it as the final story for the audience.",
         "",
@@ -1100,7 +1144,7 @@ def write_demo_materials(sections: list[tuple[str, list[str]]]) -> None:
         "[x] Missing values and cleaning decisions documented.",
         "[x] NumPy/Pandas numerical analysis completed.",
         "[x] Excel workbook created with analysis tables and charts.",
-        "[x] SQLite database, schema, queries, and query results created.",
+        "[x] MySQL database, schema, queries, and query results created.",
         "[x] Visualisations exported as PNG files.",
         "[x] Report draft generated in Markdown, DOCX, and PDF.",
         "[x] Demo script prepared.",

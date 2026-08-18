@@ -46,7 +46,7 @@ The IPC distribution shows Phase 1 and Phase 2 as the largest reported phase gro
 
 ## Database Integration
 
-A SQLite database named food_security.db was generated from the cleaned datasets. It includes tables for cleaned IPC records, IPC phase distribution, severe food insecurity trend data, and summarised IPC phase results.
+A MySQL database named food_security_db was generated from the cleaned datasets. It includes tables for cleaned IPC records, IPC phase distribution, severe food insecurity trend data, and summarised IPC phase results.
 
 The database folder includes schema.sql, queries.sql, exported SELECT query results, and safe UPDATE/DELETE examples. The update and delete examples use WHERE clauses and are intended for a copied demo table.
 
@@ -80,5 +80,5 @@ Recommended next steps are to refresh the source data, add household-level or pr
 - Data Preparation: cleaned CSV files, descriptive statistics, and data quality notes.
 - Numeric Analysis: NumPy-driven summary tables and numerical findings.
 - Python or Excel Data Analysis: reusable Python pipeline and Excel workbook.
-- Database Integration: SQLite database, schema, queries, and exported query results.
+- Database Integration: MySQL database, schema, queries, and exported query results.
 - Visualisation: final PNG charts and chart explanations.

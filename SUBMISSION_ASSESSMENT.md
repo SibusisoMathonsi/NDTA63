@@ -93,7 +93,7 @@
 - Screenshots or schema diagrams
 
 **What You Delivered:**
-- ✅ SQLite database (food_security.db, 28KB)
+- ✅ MySQL database (food_security_db)
 - ✅ Comprehensive schema documentation (schema.sql with 4 analytical tables)
 - ✅ Query script (queries.sql with SELECT statements)
 - ✅ Safe UPDATE/DELETE examples (safe_update_delete_evidence.csv)
@@ -169,7 +169,7 @@
 ### Strengths:
 ✅ **Professional Repository Structure** - Well-organized folders with clear workflow documentation
 ✅ **Complete Pipeline** - End-to-end reproducible analysis from raw data to report
-✅ **Strong Technical Implementation** - Python, NumPy, Pandas, SQLite all properly implemented
+✅ **Strong Technical Implementation** - Python, NumPy, Pandas, MySQL all properly implemented
 ✅ **Excellent Visualizations** - Clear, professional charts that tell a compelling story
 ✅ **Comprehensive Documentation** - README, PROCESS.txt, DATA_SOURCES_AND_PROVENANCE
 ✅ **Database Integration** - Proper schema, safe queries, auditable evidence

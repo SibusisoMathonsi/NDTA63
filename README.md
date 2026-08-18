@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/) 
 [![Data Analysis](https://img.shields.io/badge/Analysis-NumPy%20%7C%20Pandas-green.svg)](https://numpy.org)
-[![Database](https://img.shields.io/badge/Database-SQLite-lightblue.svg)](https://www.sqlite.org/)
+[![Database](https://img.shields.io/badge/Database-MySQL-blue.svg)](https://www.mysql.com/)
 [![Visualisation](https://img.shields.io/badge/Visualisation-Matplotlib%20%7C%20Seaborn-orange.svg)](https://matplotlib.org)
 ![GitHub](https://img.shields.io/badge/GitHub-Repository-black.svg)
 
@@ -24,7 +24,7 @@ This comprehensive data analysis project investigates **South African food secur
 - **Clean and validate data** — Handle missing values, normalize formats, and document data quality
 - **Perform rigorous numerical analysis** — Use NumPy arrays to calculate trends, distributions, and key metrics
 - **Create stakeholder-ready visualizations** — Develop professional charts that communicate complex findings clearly
-- **Implement database integration** — Build a queryable SQLite database with normalized schema and safe operations
+- **Implement database integration** — Build a queryable MySQL database with normalized schema and safe operations
 - **Enable reproducibility** — Construct a Python pipeline that regenerates all outputs from raw extracts
 - **Communicate findings professionally** — Generate comprehensive reports, demos, and documentation for employers and stakeholders
 
@@ -99,7 +99,7 @@ This comprehensive data analysis project investigates **South African food secur
 |-----------|-----------|---------|
 | **Data Processing** | Python 3.10+, Pandas | Load, clean, transform CSV data |
 | **Numerical Analysis** | NumPy | Array operations, statistics, reshaping |
-| **Database** | SQLite3 | Normalized data storage, queryability |
+| **Database** | MySQL 8.0+ | Normalized data storage, queryability, concurrent access |
 | **Visualization** | Matplotlib, Seaborn | Publication-ready charts |
 | **Spreadsheets** | OpenPyXL, Excel | Business-friendly analysis workbook |
 | **Reporting** | Python, Markdown | Reproducible report generation |
@@ -113,7 +113,7 @@ Raw Datasets (CSV)
 Data Preparation (Cleaning & Validation)
        ↓
     ├─→ Numeric Analysis (NumPy)
-    ├─→ Database Integration (SQLite)
+    ├─→ Database Integration (MySQL)
     └─→ Python/Excel Analysis
        ↓
     Visualisation (Charts)
@@ -131,7 +131,7 @@ Data Preparation (Cleaning & Validation)
 | **Data Preparation/** | Cleaned SA files, stats, quality notes, validation rules | Data Engineers, QA |
 | **Numeric Analysis/** | NumPy summaries, phase distributions, YoY changes | Analysts, Researchers |
 | **Python or Excel Data Analysis/** | Reusable pipeline, transformed tables, Excel workbook | Developers, Business Users |
-| **Database Integration/** | SQLite DB, schema, queries, safe operations evidence | DBAs, Data Architects |
+| **Database Integration/** | MySQL DB, schema, queries, safe operations evidence | DBAs, Data Architects |
 | **Visualisation/** | Presentation-ready PNG charts & dashboard | Stakeholders, Executives |
 | **Report & Demo/** | Final report (DOCX/PDF), demo script, checklist | Presenters, Decision-makers |
 
@@ -144,7 +144,7 @@ Data Preparation (Cleaning & Validation)
 | **Executive Dashboard** | `food_security_overview_dashboard.png` | PNG | 1-page visual summary of all findings |
 | **Trend Chart** | `severe_food_insecurity_trend.png` | PNG | SVFI prevalence 2018-2023 with trend line |
 | **Phase Distribution** | `ipc_phase_distribution_*.png` | PNG | IPC phase breakdown (persons & %) |
-| **Database** | `food_security.db` | SQLite | Queryable data store (28KB) |
+| **Database** | `food_security_db` (MySQL) | MySQL | Queryable data store with concurrent access |
 | **Schema** | `schema.sql` | SQL | Database structure documentation |
 | **Queries** | `queries.sql` | SQL | Reusable analytical queries |
 | **Final Report** | `NDTA631_Group_Report.pdf/.docx` | PDF/Word | Comprehensive narrative & findings |
@@ -160,7 +160,7 @@ Data Preparation (Cleaning & Validation)
 | **Kegoikantse Sebetseba** | Data Preparation & Python Analysis | Data cleaning, transformation logic, Python pipeline development |
 | **Agcobile Qabo** | Data Preparation & Analysis | Data validation, quality assurance, statistical summaries |
 | **Lebogang Malatjie** | Numerical Analysis & Visualization | NumPy calculations, chart design, visual storytelling |
-| **Tlotlo Naledi** | Database Integration & Reporting | SQLite implementation, query optimization, documentation |
+| **Tlotlo Naledi** | Database Integration & Reporting | MySQL implementation, query optimization, documentation |
 | **Tlotlanang Naledi** | Reporting & Stakeholder Communication | Final report writing, demo development, stakeholder materials |
 
 ---
@@ -224,7 +224,7 @@ The pipeline automatically:
 2. ✅ Filters to South Africa records
 3. ✅ Cleans and validates data
 4. ✅ Performs NumPy numerical analysis
-5. ✅ Creates SQLite database
+5. ✅ Creates MySQL database
 6. ✅ Exports database queries
 7. ✅ Generates Excel workbook
 8. ✅ Creates publication-ready visualizations
@@ -261,7 +261,7 @@ Running the pipeline **overwrites generated files** in most folders. Back up any
 
 ## 🗄️ Database Structure
 
-**SQLite Schema (4 tables):**
+**MySQL Schema (4 tables):**
 
 | Table | Rows | Purpose |
 |-------|------|---------|
@@ -373,7 +373,7 @@ After running the pipeline, confirm these artifacts exist:
 | **Data Engineering** | ETL pipeline, data validation, quality checks, normalization |
 | **Python Development** | OOP design, error handling, comprehensive documentation, 57KB codebase |
 | **Data Analysis** | NumPy arrays, reshaping, aggregations, statistical calculations |
-| **SQL & Databases** | SQLite schema design, normalized tables, complex queries, safe operations |
+| **SQL & Databases** | MySQL schema design, normalized tables, complex queries, safe operations |
 | **Visualization** | Matplotlib/Seaborn, professional charts, color theory, accessibility |
 | **Documentation** | Clear technical writing, process guides, stakeholder communication |
 | **Version Control** | Git commits, collaboration workflow, audit trail |
@@ -410,7 +410,7 @@ See [DATA_SOURCES_AND_PROVENANCE.md](DATA_SOURCES_AND_PROVENANCE.md) for complet
 | `Data Preparation/` | South Africa cleaned files, descriptive statistics, and data-quality notes. |
 | `Numeric Analysis/` | Numerical summaries, phase tables, and year-on-year calculations. |
 | `Python or Excel Data Analysis/` | Reusable Python pipeline, transformed tables, and Excel workbook. |
-| `Database Integration/` | SQLite database, schema, query script, query exports, and safe-operation evidence. |
+| `Database Integration/` | MySQL database, schema, query script, query exports, and safe-operation evidence. |
 | `Visualisation/` | Final labelled PNG charts and chart explanations. |
 | `Report & Demo/` | Markdown, DOCX, and PDF report versions plus demo material. |
 
@@ -452,7 +452,7 @@ If script execution is restricted on a managed Windows device, activate the envi
 python "Python or Excel Data Analysis\food_security_pipeline.py"
 ```
 
-The script checks for both raw CSV inputs, filters South Africa records, creates cleaned and numerical outputs, writes the SQLite database and query exports, creates the Excel workbook and visualisations, and regenerates the report/demo pack. A successful run ends with:
+The script checks for both raw CSV inputs, filters South Africa records, creates cleaned and numerical outputs, writes the MySQL database and query exports, creates the Excel workbook and visualisations, and regenerates the report/demo pack. A successful run ends with:
 
 ```text
 Food security analysis pipeline completed successfully.
@@ -482,7 +482,7 @@ The pipeline creates `Database Integration/food_security.db` with these analytic
 - `severe_food_insecurity`
 - `ipc_phase_summary`
 
-`schema.sql` documents the analytical fields, and `queries.sql` records the SELECT statements and safe UPDATE/DELETE examples. The safe examples use `WHERE` clauses and a copied demonstration table; they are evidence of safe-query patterns, not a change to the production analytical data. Exported query results provide an auditable bridge between SQLite and the report/visual outputs.
+`schema.sql` documents the analytical fields, and `queries.sql` records the SELECT statements and safe UPDATE/DELETE examples. The safe examples use `WHERE` clauses and a copied demonstration table; they are evidence of safe-query patterns, not a change to the production analytical data. Exported query results provide an auditable bridge between MySQL and the report/visual outputs.
 
 ## Technology stack
 
@@ -490,7 +490,7 @@ The pipeline creates `Database Integration/food_security.db` with these analytic
 | --- | --- |
 | Data preparation and analysis | Python, Pandas, NumPy |
 | Visualisation | Matplotlib and Seaborn; Excel workbook charts for spreadsheet review |
-| Database | SQLite through Python's standard `sqlite3` module |
+| Database | MySQL 8.0+ through Python's `mysql-connector-python` package |
 | Excel output | OpenPyXL |
 | Report generation | Python standard library, Matplotlib PDF backend, and generated DOCX/PDF artifacts |
 

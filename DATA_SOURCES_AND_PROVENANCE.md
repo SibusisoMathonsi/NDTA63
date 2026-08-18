@@ -25,7 +25,7 @@ This register documents the local data extracts used in the South Africa food-se
 - The raw CSV files are retained unchanged in `Raw datasets/`.
 - The reproducible transformation entry point is `Python or Excel Data Analysis/food_security_pipeline.py`.
 - Country filtering uses `REF_AREA = ZAF` or the matching `REF_AREA_LABEL` value, then creates the cleaned South Africa files in `Data Preparation/`.
-- Derived numerical tables, SQLite query exports, Excel output, charts, and the report pack are generated from those filtered records. See `README.md` for the rerun procedure.
+- Derived numerical tables, MySQL query exports, Excel output, charts, and the report pack are generated from those filtered records. See `README.md` for the rerun procedure.
 
 ## Critical data-quality and interpretation note: IPC Phase 5
 
