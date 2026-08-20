@@ -162,6 +162,7 @@ Data Preparation (Cleaning & Validation)
 | **Lebogang Malatjie** | Numerical Analysis & Visualization | NumPy calculations, chart design, visual storytelling |
 | **Tlotlo Naledi** | Database Integration & Reporting | MySQL implementation, query optimization, documentation |
 | **Tlotlanang Naledi** | Reporting & Stakeholder Communication | Final report writing, demo development, stakeholder materials |
+| **Thandi Sebokolodi** | Reporting & Stakeholder Communication | Final report writing, demo development, stakeholder materials |
 
 ---
 
